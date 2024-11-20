@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tosjoin/base/res/app_styles.dart';
 import 'package:tosjoin/pages/agenda/agenda_view.dart';
 import 'package:tosjoin/pages/home/home_view.dart';
+import 'package:tosjoin/pages/event_detail/event_detail_controller.dart';
 
 class EventDetailView extends StatelessWidget {
   const EventDetailView({super.key});
@@ -10,20 +11,6 @@ class EventDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
 
   final halfScreenSize =  MediaQuery.of(context).size.width / 2 - 10;
-  final descriptions = [
-    "Faculty of Engineering Party: Ignite, Innovate, Connect! Join us for a memorable event:",
-    "- Welcome Session: Meet faculty, kick-start your journey.",
-    "- Ice-Breaker Activities: Have fun, make friends.",
-    "- Program Introductions: Explore engineering opportunities.",
-    "- Innovation Workshops: Hands-on creativity sessions.",
-    "- Student Clubs Showcase: Find your community.",
-    "- Faculty Tour: Know your academic home.",
-    "- Networking Lunch: Connect with faculty and peers.",
-    "- Alumni Panel: Gain insights from successful graduates.",
-    "- Closing Celebration: Wrap up with inspiration.",
-    "- Set the stage for a year of growth, innovation, and excellence!"
-  ];
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -40,7 +27,7 @@ class EventDetailView extends StatelessWidget {
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(40)),
                       image: DecorationImage(
-                        image: AssetImage('lib/assets/party.jpg'),
+                        image: AssetImage(EventDetailController.image),
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -88,7 +75,7 @@ class EventDetailView extends StatelessWidget {
                   const Row(
                     children: [
                       Text(
-                        "Faculty of Engineering Party",
+                        EventDetailController.eventDetailTitle,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20
@@ -114,7 +101,7 @@ class EventDetailView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text("Location"),
-                                    Text("STEM Building, 704", style: AppStyles.detailsTextStyle),
+                                    Text(EventDetailController.location, style: AppStyles.detailsTextStyle),
                                   ],
                                 ),
                               ],
@@ -130,7 +117,7 @@ class EventDetailView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text("Date"),
-                                    Text("November 21st, 2024", style: AppStyles.detailsTextStyle),
+                                    Text(EventDetailController.date, style: AppStyles.detailsTextStyle),
                                   ],
                                 ),
                               ],
@@ -151,7 +138,7 @@ class EventDetailView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text("Timing"),
-                                    Text("9:00 - 10:00 AM", style: AppStyles.detailsTextStyle),
+                                    Text(EventDetailController.timing, style: AppStyles.detailsTextStyle),
                                   ],
                                 ),
                               ],
@@ -167,7 +154,7 @@ class EventDetailView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text("Attendance"),
-                                    Text("26 Registered", style: AppStyles.detailsTextStyle),
+                                    Text(EventDetailController.attendance, style: AppStyles.detailsTextStyle),
                                   ],
                                 ),
                               ],
@@ -213,10 +200,10 @@ class EventDetailView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Description', style: AppStyles.descriptionTextStyle),
-                      ...descriptions.map((text) => Text(text)),
-                      ...descriptions.map((text) => Text(text)),
-                      ...descriptions.map((text) => Text(text)),
-                      ...descriptions.map((text) => Text(text)),
+                      ...EventDetailController.descriptions.map((text) => Text(text)),
+                      ...EventDetailController.descriptions.map((text) => Text(text)),
+                      ...EventDetailController.descriptions.map((text) => Text(text)),
+                      ...EventDetailController.descriptions.map((text) => Text(text))
                     ],
                   ),
                 ],

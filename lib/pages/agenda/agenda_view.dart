@@ -13,7 +13,7 @@ class AgendaView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            const SizedBox(height: 25),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -41,7 +41,11 @@ class AgendaView extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: const [
-                  Text("dasdas"),
+                  Column(
+                    children: [
+                      
+                    ],
+                  )
                 ],
               ),
             ),
