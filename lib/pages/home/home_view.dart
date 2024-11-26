@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tosjoin/pages/event_detail/event_detail_view.dart';
 import 'package:tosjoin/pages/joined/join_view.dart';
 import 'home_controller.dart';
 
 class HomeView extends StatelessWidget {
+  HomeView({super.key});
+  
   final HomeController controller = Get.put(HomeController());
 
   @override
@@ -221,8 +224,10 @@ class HomeView extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton(
-                                onPressed: () =>
-                                    controller.joinEvent(event['title']!),
+                                onPressed: () => {
+                                  controller.joinEvent(event['title']!),
+                                  Get.to(() => const EventDetailView()),
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       const Color.fromARGB(255, 8, 24, 238),
