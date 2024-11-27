@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppStyles {
   static Color bgColor = const Color.fromRGBO(147, 147, 147, 1);
   static Color blueColor = const Color.fromRGBO(57, 47, 162, 1);
+  static Color progressColor = const Color.fromRGBO(18, 109, 160, 1);
 
   static TextStyle detailsTextStyle = TextStyle(
     fontSize: 12,
@@ -46,5 +47,16 @@ class AppStyles {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8.0),
     ),
+  );
+
+  static TextStyle agendaTitleTextStyle = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: progressColor
+  );
+
+  static TextStyle agendaDescriptionTextStyle = const TextStyle(
+      fontSize: 15,
+      color: Color.fromRGBO(84, 95, 113, 1)
   );
 }
