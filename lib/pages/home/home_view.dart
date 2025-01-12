@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tosjoin/pages/joined/join_view.dart';
+import '../calendar/xcore.dart'; // Ensure this is the correct import path
+import '../profile/profile_view.dart';
 import 'home_controller.dart';
 
 class HomeView extends StatelessWidget {
@@ -16,12 +18,16 @@ class HomeView extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.person, color: Colors.grey),
-            onPressed: () {},
+            onPressed: () {
+              // You can add functionality here
+            },
           ),
         ],
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.grey),
-          onPressed: () {},
+          onPressed: () {
+            // You can add functionality here
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -90,38 +96,20 @@ class HomeView extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              // Stay on Home screen, no navigation needed
+              // Do nothing, we're already in HomeView
               break;
             case 1:
-              // Check if the user is already on the Joined page
-              if (Get.currentRoute == '/joined') {
-                // Show an alert if already on the JoinView
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Already on Joined Page'),
-                    content: const Text(
-                        'You are already on the joined events page.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                Get.to(() => const JoinView()); // Navigate to JoinView
-              }
+              // Navigate to Joined page
+              Get.to(() => const JoinView());
               break;
-            // case 2:
-            //   Get.to(() => const CalendarView()); // Navigate to CalendarView
-            //   break;
-            // case 3:
-            //   Get.to(() => const ProfileView()); // Navigate to ProfileView
-            // break;
+            case 2:
+              // Navigate to Calendar page
+              Get.to(() => const CalendarView());
+              break;
+            case 3:
+              // Navigate to Profile page
+              Get.to(() => ProfileView());
+              break;
           }
         },
       ),
