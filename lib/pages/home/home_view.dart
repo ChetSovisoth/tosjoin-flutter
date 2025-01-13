@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tosjoin/pages/home/event/event_detail.dart';
+import 'package:tosjoin/pages/home/home_controller.dart';
 import 'package:tosjoin/pages/joined/join_view.dart';
-import '../calendar/xcore.dart'; // Ensure this is the correct import path
-import '../profile/profile_view.dart';
-import 'home_controller.dart';
 
 class HomeView extends StatelessWidget {
+  HomeView({super.key});
+
   final HomeController controller = Get.put(HomeController());
 
   @override
@@ -18,16 +19,12 @@ class HomeView extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.person, color: Colors.grey),
-            onPressed: () {
-              // You can add functionality here
-            },
+            onPressed: () {},
           ),
         ],
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.grey),
-          onPressed: () {
-            // You can add functionality here
-          },
+          onPressed: () {},
         ),
       ),
       body: SingleChildScrollView(
@@ -96,20 +93,35 @@ class HomeView extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              // Do nothing, we're already in HomeView
               break;
             case 1:
-              // Navigate to Joined page
-              Get.to(() => const JoinView());
+              if (Get.currentRoute == '/joined') {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Already on Joined Page'),
+                    content: const Text(
+                        'You are already on the joined events page.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                Get.to(() => const JoinView()); // Navigate to JoinView
+              }
               break;
-            case 2:
-              // Navigate to Calendar page
-              Get.to(() => const CalendarView());
-              break;
-            case 3:
-              // Navigate to Profile page
-              Get.to(() => ProfileView());
-              break;
+            // case 2:
+            //   Get.to(() => const CalendarView()); // Navigate to CalendarView
+            //   break;
+            // case 3:
+            //   Get.to(() => const ProfileView()); // Navigate to ProfileView
+            // break;
           }
         },
       ),
@@ -209,8 +221,10 @@ class HomeView extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton(
-                                onPressed: () =>
-                                    controller.joinEvent(event['title']!),
+                                onPressed: () => {
+                                  controller.joinEvent(event['title']!),
+                                  Get.to(() => const EventDetailView()),
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       const Color.fromARGB(255, 8, 24, 238),

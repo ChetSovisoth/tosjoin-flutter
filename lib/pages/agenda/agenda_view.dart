@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:tosjoin/pages/home/event/event_detail.dart';
 
 class AgendaView extends StatelessWidget {
   const AgendaView({super.key});
@@ -19,18 +21,29 @@ class AgendaView extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back,
                       color: Colors.black, size: 35),
                   onPressed: () {
-                    // Get.to(() => const EventDetailView());
+                    // Navigate back or to another screen
+                    // Navigator.pop(context);
+                    // or using GetX:
+                    Get.to(() => const EventDetailView());
                   },
                 ),
-                Text(
+                const Text(
                   "Agenda",
-                  // style: AppStyles.headingTextStyle,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    // You can use your custom style here
+                    // style: AppStyles.headingTextStyle,
+                  ),
                 ),
                 IconButton(
                   icon:
                       const Icon(Icons.settings, color: Colors.black, size: 35),
                   onPressed: () {
-                    // Get.to(() => const EventDetailView());
+                    // Navigate to settings screen
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsView()));
+                    // or using GetX:
+                    // Get.to(() => const SettingsView());
                   },
                 ),
               ],
@@ -39,9 +52,16 @@ class AgendaView extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: const [
-                  Column(
-                    children: [],
-                  )
+                  // Add your list items here
+                  // Example:
+                  // ListTile(
+                  //   title: Text('Event 1'),
+                  //   subtitle: Text('10:00 AM - 11:00 AM'),
+                  // ),
+                  // ListTile(
+                  //   title: Text('Event 2'),
+                  //   subtitle: Text('11:00 AM - 12:00 PM'),
+                  // ),
                 ],
               ),
             ),
