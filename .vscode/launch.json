@@ -20,12 +20,15 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+<<<<<<< HEAD
         },
         {
             "name": "Web Chrome",
             "request": "launch",
             "type": "dart",
             "args": ["-d", "chrome", "--web-port", "8000"]
+=======
+>>>>>>> db7a540069c78323e7b3c5835fe4da9e5d92b4c5
         }
     ]
 }
