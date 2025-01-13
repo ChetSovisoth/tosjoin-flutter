@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:tosjoin/pages/calendar/calendar_controller.dart';
 import 'package:tosjoin/pages/joined/join_view.dart';
 import 'package:tosjoin/pages/home/home_view.dart';
-import '../../service/cloudflarr2.dart'; // Import the CloudflareR2Service
+import '../../service/cloudflarr2.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({super.key});

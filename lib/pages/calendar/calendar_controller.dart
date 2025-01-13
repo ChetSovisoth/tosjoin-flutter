@@ -26,8 +26,6 @@ class CalendarEvent {
       attached: json['attached'] ?? "",
     );
   }
-
-  // Get the image URL from the Cloudflare R2 service
   Future<String> getImageUrl(CloudflareR2Service r2Service) async {
     return r2Service.getImageUrl(attached);
   }
@@ -36,8 +34,6 @@ class CalendarEvent {
 class CalendarController extends ChangeNotifier {
   final Map<DateTime, List<CalendarEvent>> events = {};
   final CloudflareR2Service cloudflareService = CloudflareR2Service();
-
-  // Flag to track if a fetch is already in progress
   bool _isFetching = false;
 
   List<CalendarEvent> getEventsForDay(DateTime day) {
@@ -86,7 +82,7 @@ class CalendarController extends ChangeNotifier {
           events[eventDate]!.add(event);
         }
 
-        notifyListeners(); // Notify the UI to rebuild
+        notifyListeners();
       } else {
         debugPrint('Failed to load events: ${response.statusCode}');
         debugPrint('Response body: ${response.body}');
@@ -94,7 +90,7 @@ class CalendarController extends ChangeNotifier {
     } catch (e) {
       debugPrint('Error fetching events: $e');
     } finally {
-      _isFetching = false; // Reset flag after fetching
+      _isFetching = false;
     }
   }
 

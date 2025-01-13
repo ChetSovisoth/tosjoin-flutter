@@ -26,12 +26,10 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         accessToken = data['AccessToken'];
-        // Handle successful login here
       } else {
         // Handle error response here
       }
     } catch (e) {
-      // Handle network or unexpected errors here
     } finally {
       isLoading.value = false;
     }

@@ -9,5 +9,6 @@ class CalendarBinding extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<JoinController>(() => JoinController());
     Get.lazyPut<CalendarController>(() => CalendarController());
+    //  Get.lazyPut<CalendarController>(() => CalendarController());
   }
 }

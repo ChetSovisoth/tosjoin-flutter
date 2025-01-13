@@ -5,16 +5,11 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
 
 class CloudflareR2Service {
-  // Access keys should be stored securely, e.g., using environment variables or a secure vault.
-  final String _accessKeyId =
-      '732db35ca1b8d74350dfa3b84abacecc'; // Replace with secure method
+  final String _accessKeyId = '732db35ca1b8d74350dfa3b84abacecc';
   final String _secretAccessKey =
-      '8da42cba6811ed232f6f90a86be9a9a37e749d569803c99659fd54fc7dd6d331'; // Replace with secure method
+      '8da42cba6811ed232f6f90a86be9a9a37e749d569803c99659fd54fc7dd6d331';
   final String _endpoint =
       'https://pub-d28028f0e9f14b90a25f80f2800b14d5.r2.dev';
-  // final String _bucketName = 'tosjoin';
-
-  // Generate the signature for the request
   String _generateSignature(String stringToSign) {
     final key = utf8.encode(_secretAccessKey);
     final hmac = Hmac(sha256, key); // HMAC-SHA256
@@ -22,12 +17,10 @@ class CloudflareR2Service {
     return digest.toString();
   }
 
-  // Construct the image URL
   String getImageUrl(String fileName) {
     return '$_endpoint/$fileName';
   }
 
-  // Generate the Authorization header
   String _getAuthorizationHeader(String method, String resourcePath) {
     final now = DateTime.now().toUtc().toIso8601String();
     final stringToSign = '$method\n\n\n$now\n/$resourcePath';
@@ -35,7 +28,6 @@ class CloudflareR2Service {
     return 'AWS $_accessKeyId:$signature';
   }
 
-  // Upload a file to Cloudflare R2
   Future<bool> uploadFile(String fileName, Uint8List fileBytes,
       {String contentType = 'application/octet-stream'}) async {
     final url = Uri.parse('$_endpoint/$fileName');
@@ -62,7 +54,6 @@ class CloudflareR2Service {
     }
   }
 
-  // Download a file from Cloudflare R2
   Future<Uint8List?> downloadFile(String fileName) async {
     final url = Uri.parse('$_endpoint/$fileName');
     final headers = {
