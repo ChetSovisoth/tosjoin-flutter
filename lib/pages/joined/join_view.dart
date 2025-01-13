@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tosjoin/pages/calendar/calendar_view.dart';
 import 'package:tosjoin/pages/joined/join_controller.dart';
-import 'package:tosjoin/pages/home/home_view.dart'; // Import the HomeView
+import 'package:tosjoin/pages/home/home_view.dart';
+import 'package:tosjoin/pages/profile/profile_view.dart'; // Import the HomeView
 
 class JoinView extends StatefulWidget {
   const JoinView({super.key});
@@ -18,12 +20,15 @@ class _JoinViewState extends State<JoinView> {
     setState(() {
       _selectedIndex = index;
     });
-
-    // Navigate to the respective views based on index
     if (index == 0) {
-      Get.to(() => HomeView()); // Navigate to HomeView when "Home" is tapped
+      Get.to(() => HomeView());
     }
-    // Add additional navigation logic for other icons if needed
+    if (index == 2) {
+      Get.to(() => CalendarView());
+    }
+    if (index == 3) {
+      Get.to(() => ProfileView());
+    }
   }
 
   @override

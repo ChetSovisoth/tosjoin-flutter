@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tosjoin/pages/calendar/calendar_view.dart';
 import 'package:tosjoin/pages/home/event/event_detail.dart';
 import 'package:tosjoin/pages/home/home_controller.dart';
 import 'package:tosjoin/pages/joined/join_view.dart';
+import 'package:tosjoin/pages/profile/profile_view.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -116,12 +118,12 @@ class HomeView extends StatelessWidget {
                 Get.to(() => const JoinView()); // Navigate to JoinView
               }
               break;
-            // case 2:
-            //   Get.to(() => const CalendarView()); // Navigate to CalendarView
-            //   break;
-            // case 3:
-            //   Get.to(() => const ProfileView()); // Navigate to ProfileView
-            // break;
+            case 2:
+              Get.to(() => const CalendarView()); // Navigate to CalendarView
+              break;
+            case 3:
+              Get.to(() => ProfileView()); // Navigate to ProfileView
+              break;
           }
         },
       ),

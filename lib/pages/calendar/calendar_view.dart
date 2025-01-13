@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tosjoin/pages/calendar/calendar_controller.dart';
 import 'package:tosjoin/pages/joined/join_view.dart';
 import 'package:tosjoin/pages/home/home_view.dart';
+import 'package:tosjoin/pages/profile/profile_view.dart';
 import '../../service/cloudflarr2.dart';
 
 class CalendarView extends StatefulWidget {
@@ -28,7 +29,7 @@ class _CalendarViewState extends State<CalendarView> {
     Get.put(CalendarController());
 
     _focusedDay = DateTime.now();
-    _selectedDay = _focusedDay; // Initialize _selectedDay with _focusedDay
+    _selectedDay = _focusedDay;
     _firstDay = DateTime.now().subtract(const Duration(days: 7));
     _lastDay = DateTime.now().add(const Duration(days: 7));
     final calendarController = Get.find<CalendarController>();
@@ -52,8 +53,11 @@ class _CalendarViewState extends State<CalendarView> {
           MaterialPageRoute(builder: (context) => const JoinView()),
         );
         break;
-      case 2:
-        break; // Stay on CalendarView
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProfileView()),
+        ); // Stay on CalendarView
     }
   }
 
@@ -63,8 +67,9 @@ class _CalendarViewState extends State<CalendarView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Calendar Events"),
         centerTitle: true,
+        title: Text("Calendar Events"),
+        automaticallyImplyLeading: false, // Remove the back button
       ),
       body: Column(
         children: [
