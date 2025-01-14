@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:project_flutter/themes/appcolor.dart';
+//register 
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+import 'package:flutter/material.dart';
+import 'package:tosjoin/base/res/app_styles.dart';
+// import 'package:project_flutter/themes/appcolor.dart';
+
+class Register extends StatelessWidget {
+  const Register({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +36,16 @@ class Login extends StatelessWidget {
               "Log In Now",
               style: TextStyle(
                   fontSize: 28,
-                  color: Appcolor.primary,
+                  color: AppStyles.primary,
                   fontWeight: FontWeight.bold),
             ),
             Text(
               "Please login to continuous using our app ",
-              style: TextStyle(fontSize: 14, color: Appcolor.gray),
+              style: TextStyle(fontSize: 14, color: AppStyles.gray),
             )
           ],
         ),
+
         const SizedBox(height: 80),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -50,12 +54,27 @@ class Login extends StatelessWidget {
               TextFormField(
                 // controller: bloc.nameController,
                 decoration: const InputDecoration(
-                  hintText: "Email",
+                  hintText: "Username",
                   filled: true,
-                  fillColor: Appcolor.white,
+                  fillColor: AppStyles.white,
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Appcolor.black,
+                      color: AppStyles.black,
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              TextFormField(
+                // controller: bloc.nameController,
+                decoration: const InputDecoration(
+                  hintText: "Email",
+                  filled: true,
+                  fillColor:AppStyles.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color:AppStyles.black,
                       width: 1,
                     ),
                   ),
@@ -67,10 +86,10 @@ class Login extends StatelessWidget {
                 decoration: const InputDecoration(
                   hintText: "Password",
                   filled: true,
-                  fillColor: Appcolor.white,
+                  fillColor: AppStyles.white,
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Appcolor.black,
+                      color: AppStyles.black,
                       width: 1,
                     ),
                   ),
@@ -89,7 +108,7 @@ class Login extends StatelessWidget {
                 "Forgot Password",
                 style: TextStyle(
                     fontSize: 13,
-                    color: Appcolor.primary,
+                    color:AppStyles.primary,
                     fontWeight: FontWeight.bold),
               ),
             ],
@@ -101,7 +120,7 @@ class Login extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Appcolor.primary,
+              backgroundColor: AppStyles.primary,
             ),
             onPressed: () {
               // bloc.add(const CommentSubmitted());
@@ -110,7 +129,7 @@ class Login extends StatelessWidget {
               "Sign In",
               style: TextStyle(
                 fontSize: 16,
-                color: Appcolor.white,
+                color: AppStyles.white,
               ),
             ),
           ),
@@ -123,14 +142,14 @@ class Login extends StatelessWidget {
               "Don’t have an account ?",
               style: TextStyle(
                   fontSize: 13,
-                  color: Appcolor.gray,
+                  color: AppStyles.gray,
                   fontWeight: FontWeight.bold),
             ),
             Text(
               "Sign up",
               style: TextStyle(
                   fontSize: 13,
-                  color: Appcolor.primary,
+                  color: AppStyles.primary,
                   fontWeight: FontWeight.bold),
             ),
           ],
@@ -139,29 +158,29 @@ class Login extends StatelessWidget {
         const Text(
           "or connect with",
           style: TextStyle(
-              fontSize: 13, color: Appcolor.gray, fontWeight: FontWeight.bold),
+              fontSize: 13, color: AppStyles.gray, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              Icons.facebook,
-              color: Appcolor.primary,
-              size: 60,
-            ),
-            Icon(
-              Icons.facebook,
-              color: Appcolor.primary,
-              size: 60,
-            ),
-            Icon(
-              Icons.facebook,
-              color: Appcolor.primary,
-              size: 60,
-            )
-          ],
-        )
+        // const Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //   children: [
+        //     Icon(
+        //       Icons.facebook,
+        //       color:AppStyles.primary,
+        //       size: 60,
+        //     ),
+        //     Icon(
+        //       Icons.facebook,
+        //       color:AppStyles.primary,
+        //       size: 60,
+        //     ),
+        //     Icon(
+        //       Icons.facebook,
+        //       color: AppStyles.primary,
+        //       size: 60,
+        //     )
+        //   ],
+        // )
       ],
     );
   }
