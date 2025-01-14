@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'welcome_controller.dart'; // Import your controller
+import 'package:tosjoin/pages/home/home_view.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the controller
-    final WelcomeController controller = Get.put(WelcomeController());
-
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -21,8 +17,8 @@ class WelcomeScreen extends StatelessWidget {
               children: [
                 Image.asset(
                   'lib/assets/logo.png',
-                  width: 100,
-                  height: 100,
+                  width: 100, // Set the desired width
+                  height: 100, // Set the desired height
                 ),
                 const SizedBox(height: 20),
                 const Text(
@@ -48,12 +44,9 @@ class WelcomeScreen extends StatelessWidget {
                 const SizedBox(height: 110),
                 ElevatedButton(
                   onPressed: () {
-                    controller.loginDemoUser(
-                      'picture_url', // Replace with actual data
-                      'email@example.com', // Replace with actual data
-                      'User Name', // Replace with actual data
-                      'sub_value', // Replace with actual data
-                      'identifier_value', // Replace with actual data
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeView()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -78,7 +71,9 @@ class WelcomeScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        // Handle login tap
+                      },
                       child: const Text(
                         'Login',
                         style: TextStyle(

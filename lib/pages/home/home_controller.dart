@@ -12,6 +12,8 @@ class HomeController extends GetxController {
     {'name': 'Mobile', 'icon': "lib/assets/mobiledev.png"},
     {'name': 'Cyber Security', 'icon': "lib/assets/security.png"},
   ].obs;
+  
+  // Sample events
   var upcomingEvents = [
     {
       'date': '9 Jan',
