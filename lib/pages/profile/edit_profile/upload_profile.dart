@@ -66,7 +66,19 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,
-              child: const Text("Pick Image"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text("Pick Image",
+               style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -74,7 +86,19 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
                 // You can handle saving the profile image here
                 Navigator.pop(context); // Close the page after uploading
               },
-              child: const Text("Save Image"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text("Save Image",
+               style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+                ),
+              ),
             ),
           ],
         ),

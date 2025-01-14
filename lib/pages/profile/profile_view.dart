@@ -41,8 +41,10 @@ class ProfileView extends StatelessWidget {
             _buildProfileSection(context),
             const SizedBox(height: 16),
             _buildStatusSection(),
+            const SizedBox(height: 16,),
+            _buildSettingSection(context),
             const SizedBox(height: 16),
-            _buildSettingsSection(context),
+            _buildLanguageSection(context),
             const SizedBox(height: 16),
             _buildLogoutButton(context),
           ],
@@ -117,7 +119,7 @@ class ProfileView extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const EditProfilePage()),
+                            builder: (context) => const EditProfilePage()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -223,7 +225,23 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsSection(BuildContext context) {
+  Widget _buildSettingSection(BuildContext context) {
+  return Column(
+    children: [
+      _buildTextButton(
+        context,
+        icon: Icons.settings,
+        text: "Settings",
+        onTap: () {
+          // Navigate to Settings page or handle the logic here
+        },
+      ),
+    ],
+  );
+}
+
+
+  Widget _buildLanguageSection(BuildContext context) {
     return Column(
       children: [
         _buildTextButton(

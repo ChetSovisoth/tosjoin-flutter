@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tosjoin/pages/calendar/calendar_controller.dart';
 import 'package:tosjoin/pages/joined/join_view.dart';
 import 'package:tosjoin/pages/home/home_view.dart';
+import 'package:tosjoin/pages/profile/profile_view.dart';
 import '../../service/cloudflarr2.dart';
 
 class CalendarView extends StatefulWidget {
@@ -53,6 +54,10 @@ class _CalendarViewState extends State<CalendarView> {
         );
         break;
       case 2:
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProfileView()),
+        );
         break; // Stay on CalendarView
     }
   }

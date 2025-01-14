@@ -217,9 +217,9 @@ class EditProfilePage extends StatelessWidget {
                       ),
                 child: const Text('SUBMIT',
                 style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),),
               ),
             ),
           ],

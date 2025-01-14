@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tosjoin/pages/calendar/calendar_view.dart';
 import 'package:tosjoin/pages/joined/join_controller.dart';
+import 'package:tosjoin/pages/profile/profile_view.dart';
 import 'package:tosjoin/pages/home/home_view.dart'; // Import the HomeView
 
 class JoinView extends StatefulWidget {
@@ -46,17 +48,55 @@ class _JoinViewState extends State<JoinView> {
       // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.join_full_outlined), label: 'Joined'),
+            icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'Calendar'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            icon: Icon(Icons.join_full_outlined), label: 'Joined'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today), label: 'Calendar'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person), label: 'Profile',),
         ],
         selectedItemColor: Colors.purple, // Color for selected icon
         unselectedItemColor: Colors.grey, // Color for unselected icons
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              // Stay on Home screen, no navigation needed
+              break;
+            case 1:
+              // Check if the user is already on the Joined page
+              if (Get.currentRoute == '/joined') {
+                // Show an alert if already on the JoinView
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Already on Joined Page'),
+                    content: const Text(
+                        'You are already on the joined events page.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                Get.to(() => const JoinView()); // Navigate to JoinView
+              }
+              break;
+            case 2:
+              Get.to(() => const CalendarView()); // Navigate to CalendarView
+              break;
+            case 3:
+              Get.to(() => ProfileView()); // Navigate to ProfileView
+            break;
+          }
+        },
       ),
     );
   }
