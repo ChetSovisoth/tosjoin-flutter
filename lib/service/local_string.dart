@@ -5,9 +5,13 @@ class LocalString extends Translations {
   Map<String, Map<String, String>> get keys => {
         "en_US": {
           "sign-in": "SIGN IN",
-
+          "unpcoming_event": "Uncoming Events",
+          "just-announced": "Just Announced",
+          "get_started": "Get Started",
           "not_arrived": "You are not arrived the location.",
           "welcome": "Welcome",
+          "calendar_events": "Calendar Events",
+          "day-events": "Day Events",
           "welcome_message": "Login to your account",
           "welcome_back": "Welcome back, ",
           "attendance": "Attendance",
@@ -191,6 +195,11 @@ class LocalString extends Translations {
         },
         "kh_CM": {
           "sign-in": "ចូលគណនី",
+          "calendar_events": "ព្រឹត្តិការណ៍ប្រតិទិន",
+          "get_started": "ចាប់ផ្តេីមប្រេីប្រាស់",
+          "day-events": "ព្រឹត្តិការណ៍ប្រចាំថ្ងៃ",
+          "unpcoming_event": "ព្រឹត្តិការណ៍នាពេលខាងមុខ",
+          "just-announced": "ព្រឹត្តិការណ៍ថ្មីៗ",
           "not_arrived": "អ្នកមិនទាន់ទៅដល់ទីតាំងការងារទេ។",
           "welcome": "សូមស្វាគមន៏",
           "welcome_message": "ចូលទៅគណនីរបស់អ្នក",

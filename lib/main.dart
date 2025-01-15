@@ -70,10 +70,14 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/event-detail',
           page: () {
-            final arguments = Get.arguments;
+            final arguments = Get.arguments as Map<String, dynamic>? ?? {};
             return EventDetailView(
-              eventId: arguments['eventId'], // Pass eventId from arguments
-              token: arguments['token'], // Pass token from arguments
+              eventId: arguments['eventId'] ??
+                  'default-event-id', // Provide a default value
+              token: arguments['token'] ??
+                  'default-token', // Provide a default value
+              event: arguments['event'] ??
+                  {}, // Pass the event data or an empty map
             );
           },
         ),

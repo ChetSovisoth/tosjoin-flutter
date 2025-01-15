@@ -10,7 +10,8 @@ class JoinView extends StatefulWidget {
 }
 
 class _JoinViewState extends State<JoinView> {
-  final JoinController _controller = Get.put(JoinController());
+  final JoinController _controller = Get.find<JoinController>();
+
   int _getCurrentIndex(String route) {
     switch (route) {
       case '/home':
@@ -43,30 +44,28 @@ class _JoinViewState extends State<JoinView> {
           }
         },
       ),
-      // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex:
-            _getCurrentIndex(Get.currentRoute), // Highlight current tab
+        currentIndex: _getCurrentIndex(Get.currentRoute),
         onTap: (index) {
           switch (index) {
             case 0:
               if (Get.currentRoute != '/home') {
-                Get.offAllNamed('/home'); // Navigate to HomeView
+                Get.offAllNamed('/home');
               }
               break;
             case 1:
               if (Get.currentRoute != '/joined') {
-                Get.offAllNamed('/joined'); // Navigate to JoinView
+                Get.offAllNamed('/joined');
               }
               break;
             case 2:
               if (Get.currentRoute != '/calendar') {
-                Get.offAllNamed('/calendar'); // Navigate to CalendarView
+                Get.offAllNamed('/calendar');
               }
               break;
             case 3:
               if (Get.currentRoute != '/profile') {
-                Get.offAllNamed('/profile'); // Navigate to ProfileView
+                Get.offAllNamed('/profile');
               }
               break;
           }
@@ -79,8 +78,8 @@ class _JoinViewState extends State<JoinView> {
               icon: Icon(Icons.calendar_today), label: 'Calendar'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        selectedItemColor: Colors.purple, // Color for selected icon
-        unselectedItemColor: Colors.grey, // Color for unselected icons
+        selectedItemColor: Colors.purple,
+        unselectedItemColor: Colors.grey,
       ),
     );
   }
@@ -88,10 +87,10 @@ class _JoinViewState extends State<JoinView> {
   Widget eventList(RxList<Map<String, String>> events) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // Two items per row
-        crossAxisSpacing: 8, // Space between columns
-        mainAxisSpacing: 13, // Space between rows
-        childAspectRatio: 0.75, // Aspect ratio for each box (adjust as needed)
+        crossAxisCount: 2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 13,
+        childAspectRatio: 0.75,
       ),
       itemCount: events.length,
       itemBuilder: (context, index) {
@@ -102,7 +101,7 @@ class _JoinViewState extends State<JoinView> {
             margin: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
-              color: Colors.white, // Optional: background color
+              color: Colors.white,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -113,7 +112,8 @@ class _JoinViewState extends State<JoinView> {
                     height: double.infinity,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(event['image']!),
+                        image: NetworkImage(
+                            event['image']!), // Use NetworkImage here
                         fit: BoxFit.cover,
                       ),
                     ),

@@ -1,4 +1,3 @@
-// language_controller.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tosjoin/service/storage_service.dart';
@@ -31,7 +30,6 @@ class LanguageController extends GetxController {
     languageSelection.value = i;
   }
 
-  // Method to fetch the saved language from storage
   void getLanguage() {
     final savedLocale = storage.getLocal();
     languageSelection.value = savedLocale.languageCode == 'en' ? 1 : 2;

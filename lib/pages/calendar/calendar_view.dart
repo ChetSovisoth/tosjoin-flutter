@@ -54,7 +54,7 @@ class _CalendarViewState extends State<CalendarView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Calendar Events"),
+        title: Text("calendar_events".tr),
         automaticallyImplyLeading: false,
       ),
       body: Column(
@@ -104,16 +104,18 @@ class _CalendarViewState extends State<CalendarView> {
             ),
           ),
           const SizedBox(height: 16),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'All Events',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  'day-events'
+                      .tr, // `.tr` is a runtime operation, so `const` cannot be used
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Icon(Icons.filter_list),
+                const Icon(Icons.filter_list),
               ],
             ),
           ),
@@ -194,16 +196,17 @@ class _CalendarViewState extends State<CalendarView> {
                         () => EventDetailView(
                           eventId: event.id.toString(), // Convert int to String
                           token: 'your-auth-token',
+                          event: {
+                            // Pass the event data as a Map
+                            'title': event.title,
+                            'date': event.date,
+                            'timing': event.timing,
+                            'image': event.attached.isNotEmpty
+                                ? event.attached[0]
+                                : null,
+                            'descriptions': event.descriptions,
+                          },
                         ),
-                        arguments: {
-                          'title': event.title,
-                          'date': event.date,
-                          'timing': event.timing,
-                          'image': event.attached.isNotEmpty
-                              ? event.attached[0]
-                              : null,
-                          'descriptions': event.descriptions,
-                        },
                       );
                     },
                   ),

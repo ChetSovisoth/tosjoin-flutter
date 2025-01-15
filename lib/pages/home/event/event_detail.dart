@@ -4,22 +4,30 @@ import 'package:tosjoin/base/app_style.dart';
 import 'package:tosjoin/pages/agenda/agenda_view.dart';
 import 'package:tosjoin/pages/home/event/event_controller.dart';
 import 'package:tosjoin/pages/home/home_view.dart';
+import 'package:tosjoin/pages/joined/join_controller.dart'; // Import JoinController
+import 'package:tosjoin/pages/joined/join_view.dart';
 import 'package:tosjoin/service/join_button.dart';
 
 class EventDetailView extends StatelessWidget {
   final String eventId;
   final String token;
+  final Map<String, dynamic> event;
 
-  const EventDetailView(
-      {super.key, required this.eventId, required this.token});
+  const EventDetailView({
+    super.key,
+    required this.eventId,
+    required this.token,
+    required this.event,
+  });
 
   @override
   Widget build(BuildContext context) {
     final EventDetailController controller = Get.put(EventDetailController());
+    final JoinController joinController =
+        Get.put(JoinController()); // Initialize JoinController
     final halfScreenSize = MediaQuery.of(context).size.width / 2 - 10;
-    controller.fetchEventDetails(eventId).catchError((error) {
-      debugPrint('Error: $error');
-    });
+
+    controller.fetchEventDetails(eventId);
 
     return Scaffold(
       body: Padding(
@@ -42,7 +50,7 @@ class EventDetailView extends StatelessWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(40)),
                           image: DecorationImage(
-                            image: AssetImage(controller.image.value),
+                            image: NetworkImage(controller.image.value),
                             fit: BoxFit.fitWidth,
                           ),
                         ),
@@ -178,8 +186,10 @@ class EventDetailView extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         const Text("Attendance"),
-                                        Text(controller.attendance.value,
-                                            style: AppStyles.detailsTextStyle),
+                                        Text(
+                                          controller.attendance.value,
+                                          style: AppStyles.detailsTextStyle,
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -190,13 +200,15 @@ class EventDetailView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
-
-                      // Agenda
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: () {
-                            Get.to(() => const AgendaView());
+                            Get.to(() => AgendaView(
+                                  eventId: eventId, // Pass the eventId
+                                  token: token, // Pass the token
+                                  event: event, // Pass the event data
+                                ));
                           },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,6 +250,30 @@ class EventDetailView extends StatelessWidget {
                     'date': controller.date.value,
                     'location': controller.location.value,
                     'image': controller.image.value,
+                  },
+                  onJoinPressed: () {
+                    final currentAttendance =
+                        int.tryParse(controller.attendance.value) ?? 0;
+                    final newAttendance = currentAttendance + 1;
+
+                    // Update attendance count in local storage
+                    controller.updateAttendance(eventId, newAttendance);
+
+                    // Add event to joined events list
+                    joinController.addEvent({
+                      'title': controller.eventDetailTitle.value,
+                      'date': controller.date.value,
+                      'location': controller.location.value,
+                      'image': controller.image.value,
+                    });
+
+                    // Show a success message
+                    Get.snackbar(
+                      'Success',
+                      'You have joined the event!',
+                      snackPosition: SnackPosition.BOTTOM,
+                    );
+                    Get.to(() => const JoinView());
                   },
                 )),
             const SizedBox(height: 5),

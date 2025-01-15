@@ -3,46 +3,27 @@ import 'package:get/get.dart';
 import 'package:tosjoin/pages/joined/join_controller.dart';
 import '../../../base/app_style.dart';
 
-class JoinButton extends StatefulWidget {
+class JoinButton extends StatelessWidget {
   final Map<String, String> event;
+  final VoidCallback onJoinPressed;
 
-  const JoinButton({super.key, required this.event});
-
-  @override
-  _JoinButtonState createState() => _JoinButtonState();
-}
-
-class _JoinButtonState extends State<JoinButton> {
-  final JoinController _joinController =
-      Get.put(JoinController()); // Initialize here
-  bool isJoined = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Check if the event is already joined
-    isJoined = _joinController.isEventJoined(widget.event['title']!);
-  }
+  const JoinButton({
+    super.key,
+    required this.event,
+    required this.onJoinPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final JoinController joinController = Get.find<JoinController>();
+    final isJoined = joinController.isEventJoined(event['title']!);
+
     return SizedBox(
       width: double.infinity,
       child: TextButton(
-        onPressed: () {
-          setState(() {
-            isJoined = !isJoined; // Toggle state
-            if (isJoined) {
-              _joinController
-                  .addEvent(widget.event); // Add event to joined list
-            } else {
-              _joinController
-                  .removeEvent(widget.event['title']!); // Remove event
-            }
-          });
-        },
+        onPressed: onJoinPressed,
         style: isJoined ? AppStyles.grayButtonStyle : AppStyles.blueButtonStyle,
-        child: Text(isJoined ? "Joined" : "Join Now"), // Display updated text
+        child: Text(isJoined ? "Joined" : "Join Now"),
       ),
     );
   }

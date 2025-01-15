@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tosjoin/pages/calendar/calendar_view.dart';
-import 'package:tosjoin/pages/home/event/event_detail.dart';
 import 'package:tosjoin/pages/home/home_controller.dart';
-import 'package:tosjoin/pages/joined/join_view.dart';
-import 'package:tosjoin/pages/profile/profile_view.dart';
 import 'package:tosjoin/service/cloudflarr2.dart';
-import 'package:tosjoin/service/size.dart'; // Import CloudflareR2Service
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
   final HomeController controller = Get.put(HomeController());
-  final CloudflareR2Service cloudflareService =
-      CloudflareR2Service(); // Initialize CloudflareR2Service
+  final CloudflareR2Service cloudflareService = CloudflareR2Service();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +20,7 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person, color: Colors.grey),
             onPressed: () {
-              Get.toNamed('/profile'); // Navigate to ProfileView
+              Get.toNamed('/profile');
             },
           ),
         ],
@@ -53,41 +47,59 @@ class HomeView extends StatelessWidget {
                   filled: true,
                   fillColor: Colors.grey[200],
                 ),
+                onChanged: (value) {
+                  controller.searchQuery.value = value;
+                },
               ),
               const SizedBox(height: 16),
-
-              // Categories Section
-              Obx(() => SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: controller.categories
-                          .map((category) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    category['icon'] is String
-                                        ? Image.asset(
-                                            category['icon'] as String,
-                                            width: 80,
-                                            height: 80)
-                                        : Icon(category['icon'] as IconData,
-                                            size: 40),
-                                    const SizedBox(height: 4),
-                                    Text(category['name'] as String),
-                                  ],
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  )),
-              const SizedBox(height: 12),
-
-              sectionTitle("Upcoming Events"),
-              Obx(() => eventList(controller.upcomingEvents)),
-              const SizedBox(height: 12),
-
-              sectionTitle("Just Announced"),
-              Obx(() => eventList(controller.justAnnouncedEvents)),
+              Obx(() {
+                final searchResults =
+                    controller.searchEvents(controller.searchQuery.value);
+                if (controller.searchQuery.value.isNotEmpty) {
+                  return Column(
+                    children: [
+                      sectionTitle("Search Results"),
+                      eventList(searchResults),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      Obx(() => SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: controller.categories
+                                  .map((category) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            category['icon'] is String
+                                                ? Image.asset(
+                                                    category['icon'] as String,
+                                                    width: 80,
+                                                    height: 80)
+                                                : Icon(
+                                                    category['icon']
+                                                        as IconData,
+                                                    size: 40),
+                                            const SizedBox(height: 4),
+                                            Text(category['name'] as String),
+                                          ],
+                                        ),
+                                      ))
+                                  .toList(),
+                            ),
+                          )),
+                      const SizedBox(height: 12),
+                      sectionTitle("upcoming_event".tr),
+                      eventList(controller.upcomingEvents),
+                      const SizedBox(height: 12),
+                      sectionTitle("just-announced".tr),
+                      eventList(controller.justAnnouncedEvents),
+                    ],
+                  );
+                }
+              }),
             ],
           ),
         ),
@@ -103,28 +115,27 @@ class HomeView extends StatelessWidget {
         ],
         selectedItemColor: Colors.purple,
         unselectedItemColor: Colors.grey,
-        currentIndex:
-            _getCurrentIndex(Get.currentRoute), // Highlight current tab
+        currentIndex: _getCurrentIndex(Get.currentRoute),
         onTap: (index) {
           switch (index) {
             case 0:
               if (Get.currentRoute != '/home') {
-                Get.offAllNamed('/home'); // Navigate to HomeView
+                Get.offAllNamed('/home');
               }
               break;
             case 1:
               if (Get.currentRoute != '/joined') {
-                Get.offAllNamed('/joined'); // Navigate to JoinView
+                Get.offAllNamed('/joined');
               }
               break;
             case 2:
               if (Get.currentRoute != '/calendar') {
-                Get.offAllNamed('/calendar'); // Navigate to CalendarView
+                Get.offAllNamed('/calendar');
               }
               break;
             case 3:
               if (Get.currentRoute != '/profile') {
-                Get.offAllNamed('/profile'); // Navigate to ProfileView
+                Get.offAllNamed('/profile');
               }
               break;
           }
@@ -162,7 +173,13 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget eventList(RxList<Map<String, dynamic>> events) {
+  Widget eventList(List<Map<String, dynamic>> events) {
+    if (events.isEmpty) {
+      return const Center(
+        child: Text("No events found"),
+      );
+    }
+
     return SizedBox(
       height: 200,
       child: ListView.builder(
@@ -172,9 +189,14 @@ class HomeView extends StatelessWidget {
           final event = events[index];
           return GestureDetector(
             onTap: () {
+              final eventTitle = event['title'] ?? 'Unknown Event';
+              controller.joinEvent(eventTitle);
               Get.toNamed(
                 '/event-detail',
-                arguments: {'eventId': event['id'] ?? 'default-event-id'},
+                arguments: {
+                  'eventId': event['id'] ?? 'default-event-id',
+                  'event': event, // Pass the entire event map
+                },
               );
             },
             child: Container(

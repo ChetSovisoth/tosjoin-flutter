@@ -4,18 +4,19 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:tosjoin/service/cloudflarr2.dart';
 import 'dart:convert';
+import 'package:tosjoin/pages/home/home_controller.dart'; // Import HomeEvent
 
 class EventDetailController extends GetxController {
   var eventDetailTitle = "".obs;
   var location = "".obs;
   var date = "".obs;
   var timing = "".obs;
-  var attendance = "".obs;
+  var attendance = "0".obs; // Initialize attendance count as "0"
   var descriptions = <String>[].obs;
-  var image = "lib/assets/logo.png".obs; // Default image
+  var image = "".obs; // Default image
 
-  final CloudflareR2Service _cloudflareService =
-      CloudflareR2Service(); // Initialize CloudflareR2Service
+  final CloudflareR2Service _cloudflareService = CloudflareR2Service();
+  final _storage = GetStorage(); // Initialize GetStorage
 
   Future<void> fetchEventDetails(String eventId) async {
     final url =
@@ -37,35 +38,34 @@ class EventDetailController extends GetxController {
     };
 
     try {
-      // Debug: Print the URL and headers
       debugPrint('Fetching event details from: $url');
       debugPrint('Headers: $headers');
 
       final response = await http.get(Uri.parse(url), headers: headers);
-
-      // Debug: Print the response status code and body
       debugPrint('Response status code: ${response.statusCode}');
       debugPrint('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-
-        // Debug: Print the parsed data
         debugPrint('Parsed data: $data');
 
-        // Update the observable variables with API data
-        eventDetailTitle.value = data['title'] ?? "No Title";
-        location.value = data['location'] ?? "No Location";
-        date.value = data['date'] ?? "No Date";
-        timing.value = data['timing'] ?? "No Timing";
-        attendance.value = data['attendance'] ?? "No Attendance";
-        descriptions.value = data['description'] != null
-            ? [data['description']] // Convert description to a list
-            : ["No Description"];
+        // Use HomeEvent.fromJson to parse the event data
+        final HomeEvent event = HomeEvent.fromJson(data);
+
+        // Update the observable variables with the parsed event data
+        eventDetailTitle.value = event.title;
+        location.value = event.location ?? "No Location";
+        date.value = event.date.toIso8601String();
+        timing.value = event.timing;
+        descriptions.value = event.descriptions;
+
+        // Fetch attendance count from local storage
+        final storedAttendance = _storage.read('attendance_$eventId') ?? "0";
+        attendance.value = storedAttendance;
 
         // Use CloudflareR2Service to generate the image URL
-        if (data['attached'] != null) {
-          final imageUrl = _cloudflareService.getImageUrl(data['attached']);
+        if (event.attached != null && event.attached.isNotEmpty) {
+          final imageUrl = await _cloudflareService.getImageUrl(event.attached);
           debugPrint('Generated image URL: $imageUrl');
           image.value = imageUrl;
         } else {
@@ -104,6 +104,12 @@ class EventDetailController extends GetxController {
 
       throw Exception('Error fetching event details: $e');
     }
+  }
+
+  // Update attendance count in local storage
+  void updateAttendance(String eventId, int newAttendance) {
+    attendance.value = newAttendance.toString();
+    _storage.write('attendance_$eventId', attendance.value);
   }
 
   // Retrieve the access token from GetStorage

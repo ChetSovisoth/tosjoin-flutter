@@ -1,4 +1,3 @@
-// language_view.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +20,7 @@ class LanguageView extends GetView<LanguageController> {
               title: Text("English".tr),
               value: 1,
               groupValue: controller.languageSelection.value,
-              activeColor: Colors.blue, // Replace with your primary color
+              activeColor: Colors.blue,
               onChanged: controller.onChangeLanguage,
             ),
             RadioListTile(
@@ -29,7 +28,7 @@ class LanguageView extends GetView<LanguageController> {
               title: Text("ខ្មែរ".tr, style: GoogleFonts.kantumruyPro()),
               value: 2,
               groupValue: controller.languageSelection.value,
-              activeColor: Colors.blue, // Replace with your primary color
+              activeColor: Colors.blue,
               onChanged: controller.onChangeLanguage,
             ),
           ],

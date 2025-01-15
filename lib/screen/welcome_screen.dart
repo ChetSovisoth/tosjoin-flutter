@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tosjoin/pages/language/language_binding.dart';
 import 'package:tosjoin/pages/language/language_view.dart';
+import 'package:tosjoin/pages/sign_in/signin_view.dart';
 import 'welcome_controller.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -9,7 +10,6 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the controller
     final WelcomeController controller = Get.put(WelcomeController());
 
     return Scaffold(
@@ -51,23 +51,23 @@ class WelcomeScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     controller.loginDemoUser(
-                      'picture_url', // Replace with actual data
-                      'email@example.com', // Replace with actual data
-                      'User Name', // Replace with actual data
-                      'sub_value', // Replace with actual data
-                      'identifier_value', // Replace with actual data
+                      'picture_url',
+                      'email@example.com',
+                      'User Name',
+                      'sub_value',
+                      'identifier_value',
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 110, vertical: 16),
+                        horizontal: 100, vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    'Get Started',
+                  child: Text(
+                    'get_started'.tr,
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
@@ -81,7 +81,8 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Add navigation logic for login
+                        Get.to(
+                            () => LoginView()); // Corrected navigation method
                       },
                       child: const Text(
                         'Login',
@@ -100,10 +101,10 @@ class WelcomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          print('FloatingActionButton pressed'); // Debug log
           Get.to(
             () => const LanguageView(),
             binding: LanguageBinding(),
-            fullscreenDialog: true,
             opaque: false,
             popGesture: true,
           );

@@ -5,7 +5,6 @@ import 'language_controller.dart';
 class LanguageBinding implements Bindings {
   @override
   void dependencies() {
-    // Lazy initialization of LanguageController
     Get.lazyPut<LanguageController>(() => LanguageController());
   }
 }
