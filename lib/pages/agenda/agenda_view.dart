@@ -20,10 +20,15 @@ class AgendaView extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back,
                       color: Colors.black, size: 35),
                   onPressed: () {
-                    // Navigate back or to another screen
-                    // Navigator.pop(context);
-                    // or using GetX:
-                    Get.to(() => const EventDetailView());
+                    // Pass eventId and token when navigating to EventDetailView
+                    Get.to(
+                      () => EventDetailView(
+                        eventId:
+                            'your-event-id', // Replace with the actual event ID
+                        token:
+                            'your-auth-token', // Replace with the actual token
+                      ),
+                    );
                   },
                 ),
                 const Text(

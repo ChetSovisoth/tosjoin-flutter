@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tosjoin/pages/calendar/calendar_view.dart';
 import 'package:tosjoin/pages/joined/join_controller.dart';
-import 'package:tosjoin/pages/home/home_view.dart';
-import 'package:tosjoin/pages/profile/profile_view.dart'; // Import the HomeView
 
 class JoinView extends StatefulWidget {
   const JoinView({super.key});
@@ -14,20 +11,18 @@ class JoinView extends StatefulWidget {
 
 class _JoinViewState extends State<JoinView> {
   final JoinController _controller = Get.put(JoinController());
-  int _selectedIndex = 1; // Set 'Joined' as the default selected item
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    if (index == 0) {
-      Get.to(() => HomeView());
-    }
-    if (index == 2) {
-      Get.to(() => CalendarView());
-    }
-    if (index == 3) {
-      Get.to(() => ProfileView());
+  int _getCurrentIndex(String route) {
+    switch (route) {
+      case '/home':
+        return 0;
+      case '/joined':
+        return 1;
+      case '/calendar':
+        return 2;
+      case '/profile':
+        return 3;
+      default:
+        return 1; // Default to 'Joined' tab
     }
   }
 
@@ -50,8 +45,32 @@ class _JoinViewState extends State<JoinView> {
       ),
       // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex:
+            _getCurrentIndex(Get.currentRoute), // Highlight current tab
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              if (Get.currentRoute != '/home') {
+                Get.offAllNamed('/home'); // Navigate to HomeView
+              }
+              break;
+            case 1:
+              if (Get.currentRoute != '/joined') {
+                Get.offAllNamed('/joined'); // Navigate to JoinView
+              }
+              break;
+            case 2:
+              if (Get.currentRoute != '/calendar') {
+                Get.offAllNamed('/calendar'); // Navigate to CalendarView
+              }
+              break;
+            case 3:
+              if (Get.currentRoute != '/profile') {
+                Get.offAllNamed('/profile'); // Navigate to ProfileView
+              }
+              break;
+          }
+        },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
@@ -78,10 +97,9 @@ class _JoinViewState extends State<JoinView> {
       itemBuilder: (context, index) {
         final event = events[index];
         return GestureDetector(
-          onTap: () => _controller.joinEvent(event['title']!),
+          onTap: () => _controller.removeEvent(event['title']!),
           child: Container(
-            margin: const EdgeInsets.symmetric(
-                horizontal: 8), // Add left and right margin
+            margin: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
               color: Colors.white, // Optional: background color
@@ -150,7 +168,7 @@ class _JoinViewState extends State<JoinView> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               onPressed: () =>
-                                  _controller.joinEvent(event['title']!),
+                                  _controller.removeEvent(event['title']!),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     const Color.fromARGB(255, 8, 24, 238),

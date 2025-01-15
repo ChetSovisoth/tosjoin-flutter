@@ -8,24 +8,45 @@ import 'package:tosjoin/service/cloudflarr2.dart';
 class CalendarEvent {
   final int id;
   final String title;
+  final String timing;
   final DateTime date;
   final String attached;
+  final List<String> descriptions; // Add descriptions field
 
   CalendarEvent({
     required this.id,
     required this.title,
+    required this.timing,
     required this.date,
     required this.attached,
+    required this.descriptions, // Add to constructor
   });
 
   factory CalendarEvent.fromJson(Map<String, dynamic> json) {
     return CalendarEvent(
       id: json['id'],
       title: json['title'],
+      timing: json['timing'],
       date: DateTime.parse(json['date']),
       attached: json['attached'] ?? "",
+      descriptions: json['descriptions'] ??
+          [
+            // Mock description data
+            "Faculty of Engineering Party: Ignite, Innovate, Connect! Join us for a memorable event:",
+            "- Welcome Session: Meet faculty, kick-start your journey.",
+            "- Ice-Breaker Activities: Have fun, make friends.",
+            "- Program Introductions: Explore engineering opportunities.",
+            "- Innovation Workshops: Hands-on creativity sessions.",
+            "- Student Clubs Showcase: Find your community.",
+            "- Faculty Tour: Know your academic home.",
+            "- Networking Lunch: Connect with faculty and peers.",
+            "- Alumni Panel: Gain insights from successful graduates.",
+            "- Closing Celebration: Wrap up with inspiration.",
+            "- Set the stage for a year of growth, innovation, and excellence!",
+          ], // Parse descriptions
     );
   }
+
   Future<String> getImageUrl(CloudflareR2Service r2Service) async {
     return r2Service.getImageUrl(attached);
   }

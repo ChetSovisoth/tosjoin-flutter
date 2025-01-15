@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'welcome_controller.dart'; // Import your controller
+import 'package:tosjoin/pages/language/language_binding.dart';
+import 'package:tosjoin/pages/language/language_view.dart';
+import 'welcome_controller.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -25,8 +27,8 @@ class WelcomeScreen extends StatelessWidget {
                   height: 100,
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Welcome',
+                Text(
+                  'welcome'.tr,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -78,7 +80,9 @@ class WelcomeScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        // Add navigation logic for login
+                      },
                       child: const Text(
                         'Login',
                         style: TextStyle(
@@ -93,6 +97,19 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(
+            () => const LanguageView(),
+            binding: LanguageBinding(),
+            fullscreenDialog: true,
+            opaque: false,
+            popGesture: true,
+          );
+        },
+        backgroundColor: const Color.fromARGB(255, 230, 232, 232),
+        child: const Icon(Icons.language),
       ),
     );
   }
